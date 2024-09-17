@@ -25,6 +25,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .score-list {
@@ -34,7 +35,7 @@
 .score-box {
   display: flex;
   flex-direction: column;
-  margin-left: 2ch;
+  margin-inline: 2ch;
   width: 120px;
 }
 
@@ -69,4 +70,14 @@
   margin-top: 30px;
   background-color: rgb(69, 80, 90);
   width: 100vw;
+}
+
+@media (orientation: portrait) {
+  .score-list {
+    order: 999;
+  }
+  .total-score-box {
+    position: static;
+    order: 998;
+  }
 }
