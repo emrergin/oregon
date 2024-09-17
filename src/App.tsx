@@ -37,6 +37,16 @@ function App() {
     setDeck((deck) => deck.slice(1));
   }
 
+  function gameEnd() {
+    const highScore = localStorage.getItem("highscore") || 0;
+    let message = "You earned " + score + " points.";
+    if (score > Number(highScore)) {
+      localStorage.setItem("highscore", `${score}`);
+      message += "\n NEW HIGHSCORE!";
+    }
+    alert(message);
+  }
+
   return (
     <div className="main-container">
       <div className="play-area">
@@ -71,14 +81,15 @@ function App() {
               {index === rows.length - 1 && (
                 <div>
                   {deck.length !== 0 && (
-                    <Card
-                      cardTag={deck[0]}
-                      onClick={() => {
-                        console.log("Next card is clicked.");
-                      }}
-                    />
+                    <>
+                      <Card cardTag={deck[0]} onClick={() => {}} />
+                      <div>{deck.length}</div>
+                    </>
                   )}
                 </div>
+              )}
+              {deck.length === 0 && index === rows.length - 1 && (
+                <button onClick={() => gameEnd()}>Game End</button>
               )}
             </div>
           ))}

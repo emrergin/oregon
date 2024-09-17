@@ -1,12 +1,3 @@
-function shuffle<T>(array: T[]) {
-  const resArray = array;
-  for (let i = resArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [resArray[i], resArray[j]] = [resArray[j], resArray[i]];
-  }
-  return resArray;
-}
-
 interface CardObject {
   suit: string;
   value: string;
@@ -158,15 +149,14 @@ function checkIfStraight(handObject: CardObject[]) {
   for (let i = 1; i < values.length; i++) {
     if (values[i] === values[i - 1] + 1) {
       sequenceLength++;
+      if (sequenceLength >= 5) {
+        return true;
+      }
     } else {
       sequenceLength = 1;
     }
   }
-  if (sequenceLength >= 5) {
-    return true;
-  } else {
-    return false;
-  }
+  return false;
 }
 
 function countCards(handObject: CardObject[]) {
@@ -182,6 +172,15 @@ function countCards(handObject: CardObject[]) {
 }
 
 export function getDeck() {
+  function shuffle<T>(array: T[]) {
+    const resArray = array;
+    for (let i = resArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [resArray[i], resArray[j]] = [resArray[j], resArray[i]];
+    }
+    return resArray;
+  }
+
   const values = [
     "2",
     "3",
