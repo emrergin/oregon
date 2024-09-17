@@ -8,6 +8,7 @@ function App() {
   const [rows, setRows] = useState<string[][]>([]);
   const [deck, setDeck] = useState(getDeck());
   const isStarted = useRef(false);
+  const lastRowRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isStarted.current) {
@@ -22,6 +23,9 @@ function App() {
     if (rows.length > 0) {
       setScore((score) => score + findCombination(rows[rows.length - 1]).score);
     }
+    if (lastRowRef.current) {
+      lastRowRef.current.scrollIntoView();
+    }
   }
 
   function placeCard(index: number) {
@@ -35,24 +39,6 @@ function App() {
 
   return (
     <div className="main-container">
-      <p>
-        <b>Introduction</b>: This is an implementation of the game{" "}
-        <a
-          href="https://boardgamegeek.com/boardgame/341393/oregon"
-          target="_blank"
-        >
-          Oregon
-        </a>
-        , designed by Reiner Knizia, published on the book "<i>Blazing Aces!</i>
-        ", by FRED distribution and Convivium Publications.
-      </p>
-      <p>
-        <b>Rules</b>: Cards are shuffled. Five cards are laid out face-up in a
-        row. One card after another is drawn from the deck . Add each card onto
-        an old card or start a new row. All new cards may only be played on the
-        last row. When all the cards are used up, the points for the poker
-        combinations in each row are scored. The more points the better.
-      </p>
       <div className="play-area">
         <div className="total-score-box">
           <div>Total score:</div>
@@ -60,7 +46,11 @@ function App() {
         </div>
         <div className="card-table">
           {rows.map((row, index) => (
-            <div className="card-row" key={index}>
+            <div
+              className="card-row"
+              key={index}
+              ref={index === rows.length - 1 ? lastRowRef : null}
+            >
               {row.map((a, cardIndex) => (
                 <Card
                   cardTag={a}
@@ -109,6 +99,25 @@ function App() {
           </ul>
         </div>
       </div>
+
+      <p>
+        This is an implementation of the game{" "}
+        <a
+          href="https://boardgamegeek.com/boardgame/341393/oregon"
+          target="_blank"
+        >
+          Oregon
+        </a>
+        , designed by Reiner Knizia, published on the book "<i>Blazing Aces!</i>
+        ", by FRED distribution and Convivium Publications.
+      </p>
+      <p>
+        <b>Rules</b>: Cards are shuffled. Five cards are laid out face-up in a
+        row. One card after another is drawn from the deck . Add each card onto
+        an old card or start a new row. All new cards may only be played on the
+        last row. When all the cards are used up, the points for the poker
+        combinations in each row are scored. The more points the better.
+      </p>
     </div>
   );
 }
