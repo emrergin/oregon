@@ -28,10 +28,15 @@
   color: black;
   border-radius: 0.2ch;
   font-size: large;
+  user-select: none;
+}
+
+.card.clickable:hover {
+  outline: 2px solid red;
 }
 
 .card-table {
-  width: 400px;
+  width: 450px;
 }
 
 .card-row {
@@ -47,6 +52,7 @@
   display: flex;
   flex-direction: column;
   margin-left: 2ch;
+  width: 120px;
 }
 
 .total-score-box {

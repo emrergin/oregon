@@ -17,11 +17,19 @@ function logoPicker(logoText: string) {
   }
 }
 
-function Card({ cardTag }: { cardTag: string }) {
+function Card({
+  cardTag,
+  onClick,
+  clickable = false,
+}: {
+  cardTag: string;
+  clickable?: boolean;
+  onClick: () => void;
+}) {
   return (
-    <div className="card">
+    <div className={"card" + (clickable ? " clickable" : "")} onClick={onClick}>
       <div>{logoPicker(cardTag[1])}</div>
-      <div>{cardTag[0]}</div>
+      <div>{cardTag[0] === "T" ? 10 : cardTag[0]}</div>
     </div>
   );
 }

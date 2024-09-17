@@ -75,6 +75,9 @@ export function findCombination(hand: string[]) {
 
 function checkFlush(handObject: CardObject[]) {
   const suits = new Set(handObject.map((a) => a.suit));
+  if (handObject.length < 5) {
+    return false;
+  }
   if (suits.size > 1) {
     return false;
   } else {
@@ -153,7 +156,6 @@ function checkIfStraight(handObject: CardObject[]) {
     .sort((a, b) => a - b);
   let sequenceLength = 1;
   for (let i = 1; i < values.length; i++) {
-    console.log(sequenceLength);
     if (values[i] === values[i - 1] + 1) {
       sequenceLength++;
     } else {
@@ -200,7 +202,7 @@ export function getDeck() {
 
   let deck: string[] = [];
 
-  for (let i = 0; i < suits.length; i++) {
+  for (let i = 0; i < values.length; i++) {
     for (let j = 0; j < suits.length; j++) {
       deck = [...deck, values[i] + suits[j]];
     }

@@ -4,20 +4,33 @@ import Card from "./Card";
 import { findCombination, getDeck } from "./helpers";
 
 function App() {
-  const [score] = useState(0);
-  const [rows, setCurrentRows] = useState<string[][]>([]);
-  const deck = useRef(getDeck());
+  const [score, setScore] = useState(0);
+  const [rows, setRows] = useState<string[][]>([]);
+  const [deck, setDeck] = useState(getDeck());
+  const isStarted = useRef(false);
 
   useEffect(() => {
-    if (rows.length === 0) {
-      console.log(rows);
+    if (!isStarted.current) {
+      isStarted.current = true;
       getNewRow();
     }
   }, []);
 
   function getNewRow() {
-    setCurrentRows((rows) => [...rows, deck.current.slice(0, 5)]);
-    deck.current = deck.current.slice(5);
+    setRows((rows) => [...rows, deck.slice(0, 5)]);
+    setDeck((deck) => deck.slice(5));
+    if (rows.length > 0) {
+      setScore((score) => score + findCombination(rows[rows.length - 1]).score);
+    }
+  }
+
+  function placeCard(index: number) {
+    const newRow = rows[rows.length - 1];
+    if (deck.length !== 0) {
+      newRow[index] = deck[0];
+    }
+    setRows((rows) => [...rows.slice(0, -1), newRow]);
+    setDeck((deck) => deck.slice(1));
   }
 
   return (
@@ -48,13 +61,35 @@ function App() {
         <div className="card-table">
           {rows.map((row, index) => (
             <div className="card-row" key={index}>
-              {row.map((a) => (
-                <Card cardTag={a} key={a} />
+              {row.map((a, cardIndex) => (
+                <Card
+                  cardTag={a}
+                  key={a}
+                  clickable={index === rows.length - 1 && deck.length > 0}
+                  onClick={() => {
+                    placeCard(cardIndex);
+                  }}
+                />
               ))}
               <div className="score-box">
                 <div>{findCombination(row).type}</div>
                 <div>{findCombination(row).score}</div>
+                {index === rows.length - 1 && deck.length > 0 && (
+                  <button onClick={() => getNewRow()}>New Row +</button>
+                )}
               </div>
+              {index === rows.length - 1 && (
+                <div>
+                  {deck.length !== 0 && (
+                    <Card
+                      cardTag={deck[0]}
+                      onClick={() => {
+                        console.log("Next card is clicked.");
+                      }}
+                    />
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>
