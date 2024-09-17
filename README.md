@@ -13,4 +13,5 @@ Uses React, Typescript and works as a single page application. Uses Vite for dev
 ### Thanks
 
 - **Reiner Knizia** for making a bucket load of games.
-- [elricz](https://boardgamegeek.com/user/elricz) for the automated excel file which was an inspiration.
+- Suit SVGs are from https://game-icons.net/, all by Skoll under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/).
+- Boardgamegeek user [elricz](https://boardgamegeek.com/user/elricz) for the automated excel file which was an inspiration.

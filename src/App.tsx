@@ -124,11 +124,16 @@ function App() {
       </p>
       <p>
         <b>Rules</b>: Cards are shuffled. Five cards are laid out face-up in a
-        row. One card after another is drawn from the deck . Add each card onto
+        row. One card after another is drawn from the deck. Add each card onto
         an old card or start a new row. All new cards may only be played on the
         last row. When all the cards are used up, the points for the poker
         combinations in each row are scored. The more points the better.
       </p>
+      <div className="footer">
+        <a href="https://github.com/emrergin/oregon" target="_blank">
+          Source code
+        </a>
+      </div>
     </div>
   );
 }
