@@ -14,6 +14,7 @@
   border-radius: 0.2ch;
   font-size: large;
   user-select: none;
+  max-width: 19vw;
 }
 
 .card.clickable:hover {
@@ -23,6 +24,7 @@
 .card-row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .score-list {
