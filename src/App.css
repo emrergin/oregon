@@ -30,12 +30,37 @@
   font-size: large;
 }
 
+.card-table {
+  width: 400px;
+}
+
 .card-row {
   display: flex;
+  align-items: center;
 }
 
 .score-list {
   text-align: left;
+}
+
+.score-box {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2ch;
+}
+
+.total-score-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.total-score-box > div:last-child {
+  font-size: 3em;
+}
+
+.play-area {
+  display: flex;
+  gap: 3ch;
 }
 
 .main-container {

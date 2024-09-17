@@ -1,36 +1,25 @@
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Card from "./Card";
-import { shuffle } from "./helpers";
-
-const values = [
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "T",
-  "J",
-  "Q",
-  "K",
-  "A",
-];
-
-const suits = ["d", "s", "c", "h"];
-
-let deck: string[] = [];
-
-for (let i = 0; i < suits.length; i++) {
-  for (let j = 0; j < suits.length; j++) {
-    deck = [...deck, values[i] + suits[j]];
-  }
-}
-
-deck = shuffle(deck);
+import { findCombination, getDeck } from "./helpers";
 
 function App() {
+  const [score] = useState(0);
+  const [rows, setCurrentRows] = useState<string[][]>([]);
+  const deck = useRef(getDeck());
+
+  useEffect(() => {
+    if (rows.length === 0) {
+      console.log(rows);
+      getNewRow();
+    }
+  }, []);
+
+  function getNewRow() {
+    setCurrentRows((rows) => [...rows, deck.current.slice(0, 5)]);
+    deck.current = deck.current.slice(5);
+  }
+
   return (
     <div className="main-container">
       <p>
@@ -51,24 +40,39 @@ function App() {
         last row. When all the cards are used up, the points for the poker
         combinations in each row are scored. The more points the better.
       </p>
-      <div className="score-list">
-        <b>Scores:</b>
-        <ul>
-          <li>Plugged nickel 0</li>
-          <li>One pair 1</li>
-          <li>Two pairs 2</li>
-          <li> Three of a kind 3</li>
-          <li>Straight 3 </li>
-          <li>Flush 3</li>
-          <li> Full house 5 </li>
-          <li>Four of a kind 7 </li>
-          <li>Straight flush 10</li>
-        </ul>
-      </div>
-      <div className="card-row">
-        {deck.slice(0, 5).map((a) => (
-          <Card cardTag={a} />
-        ))}
+      <div className="play-area">
+        <div className="total-score-box">
+          <div>Total score:</div>
+          <div>{score}</div>
+        </div>
+        <div className="card-table">
+          {rows.map((row, index) => (
+            <div className="card-row" key={index}>
+              {row.map((a) => (
+                <Card cardTag={a} key={a} />
+              ))}
+              <div className="score-box">
+                <div>{findCombination(row).type}</div>
+                <div>{findCombination(row).score}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="score-list">
+          <b>Scores:</b>
+          <ul>
+            <li>Plugged nickel 0</li>
+            <li>One pair 1</li>
+            <li>Two pairs 2</li>
+            <li> Three of a kind 3</li>
+            <li>Straight 3 </li>
+            <li>Flush 3</li>
+            <li> Full house 5 </li>
+            <li>Four of a kind 7 </li>
+            <li>Straight flush 10</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
