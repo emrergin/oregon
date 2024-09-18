@@ -17,13 +17,6 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (deck.length === 0) {
-      setScore((score) => score + findCombination(rows[rows.length - 1]).score);
-    }
-    console.log("hehehe");
-  }, [deck.length, rows]);
-
   function getNewRow() {
     setRows((rows) => [...rows, deck.slice(0, 5)]);
     setDeck((deck) => deck.slice(5));
@@ -32,6 +25,9 @@ function App() {
     }
     if (lastRowRef.current) {
       lastRowRef.current.scrollIntoView();
+    }
+    if (deck.length === 0) {
+      setScore((score) => score + findCombination(rows[rows.length - 1]).score);
     }
   }
 
@@ -42,6 +38,9 @@ function App() {
     }
     setRows((rows) => [...rows.slice(0, -1), newRow]);
     setDeck((deck) => deck.slice(1));
+    if (deck.length === 1) {
+      setScore((score) => score + findCombination(rows[rows.length - 1]).score);
+    }
   }
 
   function gameEnd() {
