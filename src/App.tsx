@@ -17,6 +17,13 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (deck.length === 0) {
+      setScore((score) => score + findCombination(rows[rows.length - 1]).score);
+    }
+    console.log("hehehe");
+  }, [deck.length, rows]);
+
   function getNewRow() {
     setRows((rows) => [...rows, deck.slice(0, 5)]);
     setDeck((deck) => deck.slice(5));
