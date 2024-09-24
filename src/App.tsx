@@ -7,6 +7,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [rows, setRows] = useState<string[][]>([]);
   const [deck, setDeck] = useState(getDeck());
+  const [scoreShown, setScoreShown] = useState(false);
   const isStarted = useRef(false);
   const lastRowRef = useRef<null | HTMLDivElement>(null);
 
@@ -37,10 +38,10 @@ function App() {
       newRow[index] = deck[0];
     }
     setRows((rows) => [...rows.slice(0, -1), newRow]);
-    setDeck((deck) => deck.slice(1));
     if (deck.length === 1) {
       setScore((score) => score + findCombination(rows[rows.length - 1]).score);
     }
+    setDeck((deck) => deck.slice(1));
   }
 
   function gameEnd() {
@@ -50,6 +51,7 @@ function App() {
       localStorage.setItem("highscore", `${score}`);
       message += "\n NEW HIGHSCORE!";
     }
+    setScoreShown(true);
     alert(message);
   }
 
@@ -117,6 +119,15 @@ function App() {
         </div>
       </div>
 
+      {scoreShown && (
+        <button
+          onClick={() => {
+            location.reload();
+          }}
+        >
+          Restart
+        </button>
+      )}
       <p>
         This is an implementation of the game{" "}
         <a
