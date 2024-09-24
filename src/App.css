@@ -30,6 +30,9 @@
 
 .score-list {
   text-align: left;
+  position: sticky;
+  top: 20px;
+  height: 20em;
 }
 
 .score-box {
@@ -75,6 +78,7 @@
 @media (orientation: portrait) {
   .score-list {
     order: 999;
+    position: static;
   }
   .total-score-box {
     position: static;
